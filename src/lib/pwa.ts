@@ -11,8 +11,11 @@ function isExcludedContext(): boolean {
   if (window.self !== window.top) return true;
   const url = new URL(window.location.href);
   if (url.searchParams.get("sw") === "off") return true;
-  const host = window.location.hostname;
-  if (host.startsWith("id-preview--") || host.startsWith("preview--")) return true;
+  const host = window.location.hostname.toLowerCase();
+  const previewDomain = /\.(lovable\.app|gpt-eng\.com|gptengineer\.run)$/.test(host);
+  const firstLabel = host.split(".")[0];
+  if (previewDomain && /^(?:id-preview|preview)(?:-[a-z0-9]+)?--.+$/.test(firstLabel)) return true;
+  if (previewDomain && /^project--.+-dev$/.test(firstLabel)) return true;
   if (host === "lovableproject.com" || host.endsWith(".lovableproject.com")) return true;
   if (host === "lovableproject-dev.com" || host.endsWith(".lovableproject-dev.com")) return true;
   if (host === "beta.lovable.dev" || host.endsWith(".beta.lovable.dev")) return true;
