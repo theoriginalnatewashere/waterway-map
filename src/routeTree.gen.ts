@@ -10,33 +10,135 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as WelcomeLocationRouteImport } from './routes/welcome-location'
+import { Route as AuthenticatedReportRouteImport } from './routes/_authenticated/report'
+import { Route as DispensersIndexRouteImport } from './routes/dispensers.index'
+import { Route as DispensersIdRouteImport } from './routes/dispensers.$id'
+import { Route as AuthenticatedDispensersNewRouteImport } from './routes/_authenticated/dispensers.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeLocationRoute = WelcomeLocationRouteImport.update({
+  id: '/welcome-location',
+  path: '/welcome-location',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedReportRoute = AuthenticatedReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DispensersIndexRoute = DispensersIndexRouteImport.update({
+  id: '/dispensers/',
+  path: '/dispensers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispensersIdRoute = DispensersIdRouteImport.update({
+  id: '/dispensers/$id',
+  path: '/dispensers/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDispensersNewRoute =
+  AuthenticatedDispensersNewRouteImport.update({
+    id: '/dispensers/new',
+    path: '/dispensers/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/profile': typeof ProfileRoute
+  '/welcome-location': typeof WelcomeLocationRoute
+  '/report': typeof AuthenticatedReportRoute
+  '/dispensers/$id': typeof DispensersIdRoute
+  '/dispensers/': typeof DispensersIndexRoute
+  '/dispensers/new': typeof AuthenticatedDispensersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/profile': typeof ProfileRoute
+  '/welcome-location': typeof WelcomeLocationRoute
+  '/report': typeof AuthenticatedReportRoute
+  '/dispensers/$id': typeof DispensersIdRoute
+  '/dispensers': typeof DispensersIndexRoute
+  '/dispensers/new': typeof AuthenticatedDispensersNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/profile': typeof ProfileRoute
+  '/welcome-location': typeof WelcomeLocationRoute
+  '/_authenticated/report': typeof AuthenticatedReportRoute
+  '/dispensers/$id': typeof DispensersIdRoute
+  '/dispensers/': typeof DispensersIndexRoute
+  '/_authenticated/dispensers/new': typeof AuthenticatedDispensersNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/profile'
+    | '/welcome-location'
+    | '/report'
+    | '/dispensers/$id'
+    | '/dispensers/'
+    | '/dispensers/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/profile'
+    | '/welcome-location'
+    | '/report'
+    | '/dispensers/$id'
+    | '/dispensers'
+    | '/dispensers/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/profile'
+    | '/welcome-location'
+    | '/_authenticated/report'
+    | '/dispensers/$id'
+    | '/dispensers/'
+    | '/_authenticated/dispensers/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ProfileRoute: typeof ProfileRoute
+  WelcomeLocationRoute: typeof WelcomeLocationRoute
+  DispensersIdRoute: typeof DispensersIdRoute
+  DispensersIndexRoute: typeof DispensersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +150,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome-location': {
+      id: '/welcome-location'
+      path: '/welcome-location'
+      fullPath: '/welcome-location'
+      preLoaderRoute: typeof WelcomeLocationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/report': {
+      id: '/_authenticated/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof AuthenticatedReportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/dispensers/': {
+      id: '/dispensers/'
+      path: '/dispensers'
+      fullPath: '/dispensers/'
+      preLoaderRoute: typeof DispensersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispensers/$id': {
+      id: '/dispensers/$id'
+      path: '/dispensers/$id'
+      fullPath: '/dispensers/$id'
+      preLoaderRoute: typeof DispensersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dispensers/new': {
+      id: '/_authenticated/dispensers/new'
+      path: '/dispensers/new'
+      fullPath: '/dispensers/new'
+      preLoaderRoute: typeof AuthenticatedDispensersNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedReportRoute: typeof AuthenticatedReportRoute
+  AuthenticatedDispensersNewRoute: typeof AuthenticatedDispensersNewRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedReportRoute: AuthenticatedReportRoute,
+  AuthenticatedDispensersNewRoute: AuthenticatedDispensersNewRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ProfileRoute: ProfileRoute,
+  WelcomeLocationRoute: WelcomeLocationRoute,
+  DispensersIdRoute: DispensersIdRoute,
+  DispensersIndexRoute: DispensersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

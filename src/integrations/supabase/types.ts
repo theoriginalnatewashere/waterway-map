@@ -14,16 +14,179 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dispensers: {
+        Row: {
+          address: string | null
+          created_at: string
+          created_by: string
+          id: string
+          image_urls: string[]
+          is_hidden: boolean
+          latitude: number
+          location_description: string | null
+          longitude: number
+          name: string
+          operating_status: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          image_urls?: string[]
+          is_hidden?: boolean
+          latitude: number
+          location_description?: string | null
+          longitude: number
+          name: string
+          operating_status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          image_urls?: string[]
+          is_hidden?: boolean
+          latitude?: number
+          location_description?: string | null
+          longitude?: number
+          name?: string
+          operating_status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          full_name: string | null
+          id: string
+          language: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          full_name?: string | null
+          id: string
+          language?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          full_name?: string | null
+          id?: string
+          language?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      water_quality_reports: {
+        Row: {
+          created_at: string
+          dispenser_id: string
+          dispenser_status: string
+          id: string
+          image_urls: string[]
+          is_hidden: boolean
+          meter_model: string | null
+          notes: string | null
+          ph_level: number
+          tds_ppm: number
+          tested_at: string
+          tested_directly_from_outlet: boolean
+          updated_at: string
+          user_id: string
+          water_temperature_c: number | null
+        }
+        Insert: {
+          created_at?: string
+          dispenser_id: string
+          dispenser_status?: string
+          id?: string
+          image_urls?: string[]
+          is_hidden?: boolean
+          meter_model?: string | null
+          notes?: string | null
+          ph_level: number
+          tds_ppm: number
+          tested_at: string
+          tested_directly_from_outlet: boolean
+          updated_at?: string
+          user_id: string
+          water_temperature_c?: number | null
+        }
+        Update: {
+          created_at?: string
+          dispenser_id?: string
+          dispenser_status?: string
+          id?: string
+          image_urls?: string[]
+          is_hidden?: boolean
+          meter_model?: string | null
+          notes?: string | null
+          ph_level?: number
+          tds_ppm?: number
+          tested_at?: string
+          tested_directly_from_outlet?: boolean
+          updated_at?: string
+          user_id?: string
+          water_temperature_c?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "water_quality_reports_dispenser_id_fkey"
+            columns: ["dispenser_id"]
+            isOneToOne: false
+            referencedRelation: "dispensers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +313,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
