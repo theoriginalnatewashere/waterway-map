@@ -2,7 +2,6 @@ import { useState, type FormEvent } from "react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Mail, Lock, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { getPostAuthRedirect } from "@/lib/profileRouting";
@@ -74,20 +73,17 @@ export function AuthSignUp() {
     if (googleLoading) return;
     setGoogleLoading(true);
     try {
-      const redirect_uri = next
-        ? `${window.location.origin}${next}`
-        : window.location.origin;
-      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri });
-      if (result.error) {
-        toast.error(result.error.message ?? t("auth.googleFailed"));
+      // Return to the public /auth page; it forwards signed-in users to `next`.
+      const redirectTo = next
+        ? `${window.location.origin}/auth?next=${encodeURIComponent(next)}`
+        : `${window.location.origin}/auth`;
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+      if (error) {
+        toast.error(error.message ?? t("auth.googleFailed"));
         setGoogleLoading(false);
-        return;
-      }
-      if (result.redirected) return;
-      if (next) {
-        window.location.href = next;
-      } else {
-        navigate({ to: "/" });
       }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("auth.googleFailed"));
