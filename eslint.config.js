@@ -7,6 +7,8 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   { ignores: ["dist", ".output", ".vinxi"] },
+  // Integration-managed files are regenerated, not maintained by this project.
+  { ignores: ["src/integrations/supabase/**", "src/routeTree.gen.ts"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -35,6 +37,11 @@ export default tseslint.config(
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
     },
+  },
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}", "src/app/h2o/MapView.tsx", "src/app/h2o/StatusBadge.tsx", "src/i18n/LanguageProvider.tsx"],
+    // Existing shared APIs intentionally colocate hooks/variants with their components.
+    rules: { "react-refresh/only-export-components": "off" },
   },
   eslintPluginPrettier,
 );

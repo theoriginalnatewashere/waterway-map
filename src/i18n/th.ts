@@ -165,6 +165,8 @@ export const th: Resources = {
     noReports: "คุณยังไม่ได้ส่งรายงานใด ๆ",
     saveSuccess: "บันทึกโปรไฟล์แล้ว",
     saveError: "ไม่สามารถบันทึกโปรไฟล์ได้",
+    languageSaveError: "เปลี่ยนภาษาบนอุปกรณ์นี้แล้ว แต่บันทึกในบัญชีไม่สำเร็จ โปรดลองอีกครั้ง",
+    languageLocalSaveError: "ไม่สามารถจดจำภาษาบนอุปกรณ์นี้ได้",
     language: "Language / ภาษา",
     languageEnglish: "English",
     languageThai: "ไทย",

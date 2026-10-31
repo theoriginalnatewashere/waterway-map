@@ -36,8 +36,9 @@ export function detectInitialLanguage(): AppLanguage {
 export function storeLanguage(lang: AppLanguage) {
   try {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    return true;
   } catch {
-    // ignore
+    return false;
   }
 }
 

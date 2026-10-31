@@ -164,6 +164,8 @@ export const en = {
     noReports: "You haven't submitted any reports yet.",
     saveSuccess: "Profile saved",
     saveError: "Could not save profile",
+    languageSaveError: "Language changed on this device, but could not be saved to your account. Please try again.",
+    languageLocalSaveError: "Could not remember the language on this device.",
     language: "Language / ภาษา",
     languageEnglish: "English",
     languageThai: "ไทย",
