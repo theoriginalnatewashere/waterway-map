@@ -7,14 +7,11 @@ export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "ima
 const ALLOWED_EXT = ["jpg", "jpeg", "png", "webp"];
 const BUCKET = "dispenser-images";
 
-export type ValidationResult =
-  | { ok: true; file: File }
-  | { ok: false; reason: string; file: File };
+export type ValidationResult = { ok: true; file: File } | { ok: false; reason: string; file: File };
 
 export function validateImageFile(file: File): ValidationResult {
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
-  const typeOk =
-    ALLOWED_EXT.includes(ext) && ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase());
+  const typeOk = ALLOWED_EXT.includes(ext) && ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase());
   if (!typeOk) {
     return { ok: false, file, reason: `${file.name}: only JPG, PNG or WEBP images are allowed.` };
   }

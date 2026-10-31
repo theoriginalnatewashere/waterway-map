@@ -21,7 +21,10 @@ export function DispensersPage() {
 
   useEffect(() => {
     Promise.all([listDispensers(), listRecentReports(500)])
-      .then(([d, r]) => { setDispensers(d); setReports(r); })
+      .then(([d, r]) => {
+        setDispensers(d);
+        setReports(r);
+      })
       .catch(() => setDispensers([]));
   }, []);
 
@@ -96,7 +99,11 @@ export function DispensersPage() {
                 >
                   <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-secondary">
                     {d.image_urls[0] ? (
-                      <SignedImage path={d.image_urls[0]} alt="" className="h-16 w-16 object-cover" />
+                      <SignedImage
+                        path={d.image_urls[0]}
+                        alt=""
+                        className="h-16 w-16 object-cover"
+                      />
                     ) : (
                       <div className="flex h-16 w-16 items-center justify-center text-muted-foreground">
                         <MapPin className="h-5 w-5" />
@@ -107,16 +114,21 @@ export function DispensersPage() {
                     <div className="flex items-center justify-between gap-2">
                       <p className="truncate font-semibold">{d.name}</p>
                       {dist !== null && (
-                        <span className="shrink-0 text-[11px] text-muted-foreground">{fmtDistance(dist)}</span>
+                        <span className="shrink-0 text-[11px] text-muted-foreground">
+                          {fmtDistance(dist)}
+                        </span>
                       )}
                     </div>
-                    {d.address && <p className="truncate text-xs text-muted-foreground">{d.address}</p>}
+                    {d.address && (
+                      <p className="truncate text-xs text-muted-foreground">{d.address}</p>
+                    )}
                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                       <OperatingStatusBadge status={d.operating_status} />
                       <ReportFreshnessBadge tested_at={latest?.tested_at ?? null} />
                       {latest && (
                         <span className="text-[11px] text-muted-foreground">
-                          pH {latest.ph_level.toFixed(1)} · {latest.tds_ppm} ppm · {formatDate(latest.tested_at)}
+                          pH {latest.ph_level.toFixed(1)} · {latest.tds_ppm} ppm ·{" "}
+                          {formatDate(latest.tested_at)}
                         </span>
                       )}
                     </div>

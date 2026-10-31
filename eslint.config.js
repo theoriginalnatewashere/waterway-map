@@ -39,7 +39,12 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/components/ui/**/*.{ts,tsx}", "src/app/h2o/MapView.tsx", "src/app/h2o/StatusBadge.tsx", "src/i18n/LanguageProvider.tsx"],
+    files: [
+      "src/components/ui/**/*.{ts,tsx}",
+      "src/app/h2o/MapView.tsx",
+      "src/app/h2o/StatusBadge.tsx",
+      "src/i18n/LanguageProvider.tsx",
+    ],
     // Existing shared APIs intentionally colocate hooks/variants with their components.
     rules: { "react-refresh/only-export-components": "off" },
   },

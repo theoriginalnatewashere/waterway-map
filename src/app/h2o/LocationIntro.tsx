@@ -87,9 +87,21 @@ export function LocationIntro({ userId }: { userId: string }) {
         </p>
 
         <section className="mt-6 rounded-3xl bg-card border border-border p-4 divide-y divide-border">
-          <Row icon={Navigation} title={t("onboarding.centerTitle")} desc={t("onboarding.centerDesc")} />
-          <Row icon={Droplet} title={t("onboarding.nearbyTitle")} desc={t("onboarding.nearbyDesc")} />
-          <Row icon={Lock} title={t("onboarding.privateTitle")} desc={t("onboarding.privateDesc")} />
+          <Row
+            icon={Navigation}
+            title={t("onboarding.centerTitle")}
+            desc={t("onboarding.centerDesc")}
+          />
+          <Row
+            icon={Droplet}
+            title={t("onboarding.nearbyTitle")}
+            desc={t("onboarding.nearbyDesc")}
+          />
+          <Row
+            icon={Lock}
+            title={t("onboarding.privateTitle")}
+            desc={t("onboarding.privateDesc")}
+          />
         </section>
 
         <button

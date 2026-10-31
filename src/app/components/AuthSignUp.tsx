@@ -14,7 +14,10 @@ type Mode = "signup" | "login";
 function GoogleIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.1s2.69-6.1 6-6.1c1.88 0 3.14.8 3.86 1.48l2.63-2.54C16.85 3.4 14.66 2.5 12 2.5 6.76 2.5 2.5 6.76 2.5 12S6.76 21.5 12 21.5c6.92 0 9.5-4.86 9.5-7.4 0-.5-.05-.88-.13-1.26H12z"/>
+      <path
+        fill="#EA4335"
+        d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.1s2.69-6.1 6-6.1c1.88 0 3.14.8 3.86 1.48l2.63-2.54C16.85 3.4 14.66 2.5 12 2.5 6.76 2.5 2.5 6.76 2.5 12S6.76 21.5 12 21.5c6.92 0 9.5-4.86 9.5-7.4 0-.5-.05-.88-.13-1.26H12z"
+      />
     </svg>
   );
 }
@@ -46,7 +49,7 @@ export function AuthSignUp() {
         if (error) throw error;
         if (data.session && data.user) {
           toast.success(t("auth.accountCreated"));
-           if (next) navigate({ href: next });
+          if (next) navigate({ href: next });
           else navigate({ to: getPostAuthRedirect(data.user.id) });
         } else {
           toast.success(t("auth.checkEmail"));
@@ -118,9 +121,7 @@ export function AuthSignUp() {
               type="button"
               onClick={() => setMode(m)}
               className={`h-9 rounded-xl transition ${
-                mode === m
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground"
+                mode === m ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
               }`}
             >
               {m === "signup" ? t("auth.signUp") : t("auth.logIn")}
@@ -190,9 +191,7 @@ export function AuthSignUp() {
           {t("auth.continueWithGoogle")}
         </button>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          {t("auth.terms")}
-        </p>
+        <p className="mt-6 text-center text-xs text-muted-foreground">{t("auth.terms")}</p>
       </div>
     </main>
   );

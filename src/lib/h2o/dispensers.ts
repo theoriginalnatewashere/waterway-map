@@ -32,7 +32,11 @@ export async function listDispensers(): Promise<Dispenser[]> {
 }
 
 export async function getDispenser(id: string): Promise<Dispenser | null> {
-  const { data, error } = await supabase.from("dispensers").select(SELECT).eq("id", id).maybeSingle();
+  const { data, error } = await supabase
+    .from("dispensers")
+    .select(SELECT)
+    .eq("id", id)
+    .maybeSingle();
   if (error) throw error;
   return (data as Dispenser) ?? null;
 }

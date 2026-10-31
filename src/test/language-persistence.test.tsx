@@ -18,10 +18,14 @@ vi.mock("@/integrations/supabase/client", () => ({
     from: () => ({
       select: () => ({ eq: () => ({ maybeSingle: mocks.read }) }),
       update: ({ language }: { language: string }) => ({
-        eq: () => ({ select: () => ({ single: () => {
-          mocks.writes.push(language);
-          return mocks.write(language);
-        } }) }),
+        eq: () => ({
+          select: () => ({
+            single: () => {
+              mocks.writes.push(language);
+              return mocks.write(language);
+            },
+          }),
+        }),
       }),
     }),
   },
@@ -31,9 +35,21 @@ import { LANGUAGE_STORAGE_KEY, storeLanguage } from "@/i18n";
 
 function Controls() {
   const { language, setLanguage } = useLanguage();
-  return <><output aria-label="language">{language}</output><button onClick={() => setLanguage("th")}>Thai</button><button onClick={() => setLanguage("en")}>English</button></>;
+  return (
+    <>
+      <output aria-label="language">{language}</output>
+      <button onClick={() => setLanguage("th")}>Thai</button>
+      <button onClick={() => setLanguage("en")}>English</button>
+    </>
+  );
 }
-function setup() { return render(<LanguageProvider><Controls /></LanguageProvider>); }
+function setup() {
+  return render(
+    <LanguageProvider>
+      <Controls />
+    </LanguageProvider>,
+  );
+}
 beforeEach(() => {
   vi.clearAllMocks();
   mocks.writes.length = 0;
@@ -71,9 +87,18 @@ describe("language persistence", () => {
   });
   it("serializes choices and ignores stale profile reads", async () => {
     let resolveRead: (value: unknown) => void = () => {};
-    mocks.read.mockReturnValue(new Promise((resolve) => { resolveRead = resolve; }));
+    mocks.read.mockReturnValue(
+      new Promise((resolve) => {
+        resolveRead = resolve;
+      }),
+    );
     let resolveWrite: (value: unknown) => void = () => {};
-    mocks.write.mockImplementationOnce(() => new Promise((resolve) => { resolveWrite = resolve; }));
+    mocks.write.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveWrite = resolve;
+        }),
+    );
     setup();
     await waitFor(() => expect(mocks.read).toHaveBeenCalled());
     fireEvent.click(screen.getByText("Thai"));
@@ -89,7 +114,10 @@ describe("language persistence", () => {
     expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("en");
   });
   it("does not write to an account when signed out", async () => {
-    mocks.getUser.mockResolvedValue({ data: { user: null }, error: { name: "AuthSessionMissingError" } });
+    mocks.getUser.mockResolvedValue({
+      data: { user: null },
+      error: { name: "AuthSessionMissingError" },
+    });
     setup();
     fireEvent.click(screen.getByText("Thai"));
     await act(async () => {});
@@ -98,7 +126,9 @@ describe("language persistence", () => {
     expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("th");
   });
   it("reports unavailable device storage", () => {
-    const spy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new Error("blocked"); });
+    const spy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
     expect(storeLanguage("th")).toBe(false);
     spy.mockRestore();
   });

@@ -3,7 +3,12 @@ import { Link, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, MapPin, PlusCircle, Navigation } from "lucide-react";
 import { AppShell } from "@/app/h2o/BottomNav";
 import { SignedImage, Lightbox } from "@/app/h2o/SignedImage";
-import { OperatingStatusBadge, ReportFreshnessBadge, ScreeningNotice, TdsQualityCard } from "@/app/h2o/StatusBadge";
+import {
+  OperatingStatusBadge,
+  ReportFreshnessBadge,
+  ScreeningNotice,
+  TdsQualityCard,
+} from "@/app/h2o/StatusBadge";
 import { getDispenser, type Dispenser } from "@/lib/h2o/dispensers";
 import { listReportsForDispenser, isOutdated, type WaterReport } from "@/lib/h2o/reports";
 import { signImageUrls } from "@/lib/h2o/images";
@@ -58,16 +63,20 @@ export function DispenserDetailPage({ id }: { id: string }) {
   };
 
   if (d === undefined) {
-    return <AppShell><div className="p-8 text-center text-sm text-muted-foreground">{t("common.loading")}</div></AppShell>;
+    return (
+      <AppShell>
+        <div className="p-8 text-center text-sm text-muted-foreground">{t("common.loading")}</div>
+      </AppShell>
+    );
   }
   if (d === null) {
     return (
       <AppShell>
         <div className="p-8 text-center">
-          <p className="text-sm text-muted-foreground">
-            {loadError ?? t("dispensers.notFound")}
-          </p>
-          <Link to="/dispensers" className="mt-3 inline-block text-sm font-medium text-primary">{t("common.backToList")}</Link>
+          <p className="text-sm text-muted-foreground">{loadError ?? t("dispensers.notFound")}</p>
+          <Link to="/dispensers" className="mt-3 inline-block text-sm font-medium text-primary">
+            {t("common.backToList")}
+          </Link>
         </div>
       </AppShell>
     );
@@ -123,7 +132,12 @@ export function DispenserDetailPage({ id }: { id: string }) {
         {d.image_urls.length > 1 && (
           <div className="mt-3 grid grid-cols-3 gap-2">
             {d.image_urls.slice(1).map((p) => (
-              <button key={p} type="button" onClick={() => openImage(p)} className="aspect-square overflow-hidden rounded-xl bg-secondary">
+              <button
+                key={p}
+                type="button"
+                onClick={() => openImage(p)}
+                className="aspect-square overflow-hidden rounded-xl bg-secondary"
+              >
                 <SignedImage path={p} alt="" className="h-full w-full object-cover" />
               </button>
             ))}
@@ -158,10 +172,14 @@ export function DispenserDetailPage({ id }: { id: string }) {
           </a>
         </div>
 
-        <div className="mt-4"><ScreeningNotice /></div>
+        <div className="mt-4">
+          <ScreeningNotice />
+        </div>
 
         <section className="mt-6">
-          <h2 className="mb-2 text-sm font-semibold">{t("reports.history", { total: reports.length })}</h2>
+          <h2 className="mb-2 text-sm font-semibold">
+            {t("reports.history", { total: reports.length })}
+          </h2>
           {reports.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border bg-card p-6 text-center">
               <p className="text-sm font-medium text-foreground">{t("reports.emptyTitle")}</p>
@@ -194,11 +212,15 @@ export function DispenserDetailPage({ id }: { id: string }) {
                     {/* 2 & 3. pH and TDS */}
                     <div className="mt-2 grid grid-cols-2 gap-3">
                       <div>
-                        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">pH</p>
+                        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                          pH
+                        </p>
                         <p className="text-2xl font-bold leading-tight">{r.ph_level.toFixed(1)}</p>
                       </div>
                       <div>
-                        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">TDS</p>
+                        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                          TDS
+                        </p>
                         <p className="text-2xl font-bold leading-tight">
                           {r.tds_ppm}
                           <span className="text-sm font-normal text-muted-foreground"> ppm</span>
@@ -212,7 +234,9 @@ export function DispenserDetailPage({ id }: { id: string }) {
                       {r.meter_model && ` · ${r.meter_model}`}
                     </p>
                     {/* 5. Observations / notes */}
-                    <p className={`mt-2 text-sm ${r.notes ? "text-foreground" : "italic text-muted-foreground"}`}>
+                    <p
+                      className={`mt-2 text-sm ${r.notes ? "text-foreground" : "italic text-muted-foreground"}`}
+                    >
                       {r.notes ? r.notes : t("reports.noObservations")}
                     </p>
                     {/* 6. Photos (hidden when none) */}

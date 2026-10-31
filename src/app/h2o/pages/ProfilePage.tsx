@@ -23,10 +23,17 @@ export function ProfilePage() {
   useEffect(() => {
     (async () => {
       const { data: u } = await supabase.auth.getUser();
-      if (!u.user) { setSignedIn(false); return; }
+      if (!u.user) {
+        setSignedIn(false);
+        return;
+      }
       setSignedIn(true);
       setEmail(u.user.email ?? null);
-      const { data: p } = await supabase.from("profiles").select("display_name, full_name").eq("id", u.user.id).maybeSingle();
+      const { data: p } = await supabase
+        .from("profiles")
+        .select("display_name, full_name")
+        .eq("id", u.user.id)
+        .maybeSingle();
       setProfile(p ?? { display_name: null, full_name: null });
       setDisplayName(p?.display_name ?? "");
       setReports(await listMyReports());
@@ -39,12 +46,17 @@ export function ProfilePage() {
     try {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) return;
-      const { error } = await supabase.from("profiles").update({ display_name: displayName.trim() || null }).eq("id", u.user.id);
+      const { error } = await supabase
+        .from("profiles")
+        .update({ display_name: displayName.trim() || null })
+        .eq("id", u.user.id);
       if (error) throw error;
       toast.success(t("profile.saveSuccess"));
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("profile.saveError"));
-    } finally { setSaving(false); }
+    } finally {
+      setSaving(false);
+    }
   };
 
   const signOut = async () => {
@@ -75,7 +87,9 @@ export function ProfilePage() {
               onClick={() => setLanguage(lang)}
               aria-pressed={active}
               className={`h-11 rounded-xl text-sm font-medium transition ${
-                active ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:bg-secondary"
+                active
+                  ? "bg-primary text-primary-foreground shadow"
+                  : "text-muted-foreground hover:bg-secondary"
               }`}
             >
               {languageLabels[lang]}
@@ -86,7 +100,12 @@ export function ProfilePage() {
     </section>
   );
 
-  if (signedIn === null) return <AppShell><div className="p-8 text-center text-sm text-muted-foreground">{t("common.loading")}</div></AppShell>;
+  if (signedIn === null)
+    return (
+      <AppShell>
+        <div className="p-8 text-center text-sm text-muted-foreground">{t("common.loading")}</div>
+      </AppShell>
+    );
 
   if (!signedIn) {
     return (
@@ -95,7 +114,11 @@ export function ProfilePage() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{t("profile.title")}</h1>
             <p className="mt-2 text-sm text-muted-foreground">{t("profile.signedOutBody")}</p>
-          <Link to="/auth" search={{ next: "/profile" }} className="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-primary font-medium text-primary-foreground shadow">
+            <Link
+              to="/auth"
+              search={{ next: "/profile" }}
+              className="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-primary font-medium text-primary-foreground shadow"
+            >
               {t("auth.signIn")}
             </Link>
           </div>
@@ -115,12 +138,19 @@ export function ProfilePage() {
         <form onSubmit={save} className="space-y-3">
           <div>
             <label className="block text-xs font-semibold mb-1.5">{t("profile.displayName")}</label>
-            <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} maxLength={80}
+            <input
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              maxLength={80}
               placeholder={profile?.full_name ?? t("profile.displayNamePlaceholder")}
-              className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
+              className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+            />
           </div>
-          <button type="submit" disabled={saving}
-            className="flex h-11 items-center justify-center gap-2 rounded-2xl bg-foreground px-4 text-sm font-medium text-background shadow disabled:opacity-60">
+          <button
+            type="submit"
+            disabled={saving}
+            className="flex h-11 items-center justify-center gap-2 rounded-2xl bg-foreground px-4 text-sm font-medium text-background shadow disabled:opacity-60"
+          >
             {saving && <Loader2 className="h-4 w-4 animate-spin" />} {t("common.save")}
           </button>
         </form>
@@ -128,24 +158,39 @@ export function ProfilePage() {
         <section>
           <h2 className="mb-2 text-sm font-semibold">{t("profile.yourReports")}</h2>
           {reports === null ? (
-            <div className="flex h-24 items-center justify-center"><Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /></div>
+            <div className="flex h-24 items-center justify-center">
+              <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            </div>
           ) : reports.length === 0 ? (
-            <p className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">{t("profile.noReports")}</p>
+            <p className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+              {t("profile.noReports")}
+            </p>
           ) : (
             <ul className="space-y-2">
               {reports.map((r) => (
                 <li key={r.id}>
-                  <Link to="/dispensers/$id" params={{ id: r.dispenser_id }}
-                    className="flex items-baseline justify-between rounded-2xl border border-border bg-card p-3">
-                    <span className="text-sm font-medium">pH {r.ph_level.toFixed(1)} · {r.tds_ppm} ppm</span>
-                    <span className="text-[11px] text-muted-foreground">{formatDate(r.tested_at)}</span>
+                  <Link
+                    to="/dispensers/$id"
+                    params={{ id: r.dispenser_id }}
+                    className="flex items-baseline justify-between rounded-2xl border border-border bg-card p-3"
+                  >
+                    <span className="text-sm font-medium">
+                      pH {r.ph_level.toFixed(1)} · {r.tds_ppm} ppm
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">
+                      {formatDate(r.tested_at)}
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
           )}
         </section>
-        <button type="button" onClick={signOut} className="flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card text-sm font-medium text-foreground">
+        <button
+          type="button"
+          onClick={signOut}
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card text-sm font-medium text-foreground"
+        >
           <LogOut className="h-4 w-4" /> {t("auth.signOut")}
         </button>
       </div>

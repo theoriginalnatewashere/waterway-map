@@ -14,9 +14,15 @@ export const Route = createFileRoute("/welcome-location")({
   head: () => ({
     meta: [
       { title: "Enable location — H2O Map" },
-      { name: "description", content: "Allow location access to see reverse osmosis water dispensers near you." },
+      {
+        name: "description",
+        content: "Allow location access to see reverse osmosis water dispensers near you.",
+      },
       { property: "og:title", content: "Enable location — H2O Map" },
-      { property: "og:description", content: "Allow location access to see reverse osmosis water dispensers near you." },
+      {
+        property: "og:description",
+        content: "Allow location access to see reverse osmosis water dispensers near you.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

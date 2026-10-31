@@ -113,7 +113,9 @@ export function isOutdated(tested_at: string, days = 30): boolean {
   return diff > days * 24 * 60 * 60 * 1000;
 }
 
-export async function getLatestReportForDispenser(dispenserId: string): Promise<WaterReport | null> {
+export async function getLatestReportForDispenser(
+  dispenserId: string,
+): Promise<WaterReport | null> {
   const { data, error } = await supabase
     .from("water_quality_reports")
     .select(SELECT)
