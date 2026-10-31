@@ -188,7 +188,9 @@ export const en = {
   validation: {
     chooseDispenser: "Choose a dispenser.",
     phRange: "pH must be between 0 and 14.",
-    tdsRange: "TDS must be 0 or greater.",
+    tdsRange: "TDS must be a whole number between 0 and 5000.",
+    temperatureRange: "Temperature must be between −10 and 100 °C.",
+    directOutlet: "Please confirm the water was tested directly from the dispenser outlet.",
     reportFailed: "Failed to submit report.",
     nameRequired: "Please add a name.",
     locationRequired: "Please tap the map to set the location.",

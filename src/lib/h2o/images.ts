@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
+import { MAX_PHOTOS } from "./validation";
 
-export const MAX_IMAGES = 3;
+export const MAX_IMAGES = MAX_PHOTOS;
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
 export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const ALLOWED_EXT = ["jpg", "jpeg", "png", "webp"];
@@ -13,7 +14,7 @@ export type ValidationResult =
 export function validateImageFile(file: File): ValidationResult {
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
   const typeOk =
-    ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase()) || ALLOWED_EXT.includes(ext);
+    ALLOWED_EXT.includes(ext) && ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase());
   if (!typeOk) {
     return { ok: false, file, reason: `${file.name}: only JPG, PNG or WEBP images are allowed.` };
   }

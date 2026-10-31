@@ -188,7 +188,9 @@ export const th: Resources = {
   validation: {
     chooseDispenser: "โปรดเลือกตู้น้ำดื่ม",
     phRange: "ค่า pH ต้องอยู่ระหว่าง 0 ถึง 14",
-    tdsRange: "ค่า TDS ต้องเป็น 0 หรือมากกว่า",
+    tdsRange: "ค่า TDS ต้องเป็นจำนวนเต็มระหว่าง 0 ถึง 5000",
+    temperatureRange: "อุณหภูมิต้องอยู่ระหว่าง −10 ถึง 100 °C",
+    directOutlet: "โปรดยืนยันว่าวัดน้ำจากหัวจ่ายของตู้น้ำดื่มโดยตรง",
     reportFailed: "ส่งรายงานไม่สำเร็จ",
     nameRequired: "โปรดระบุชื่อ",
     locationRequired: "โปรดแตะบนแผนที่เพื่อกำหนดตำแหน่ง",

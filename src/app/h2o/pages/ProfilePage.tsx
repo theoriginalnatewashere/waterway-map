@@ -115,7 +115,7 @@ export function ProfilePage() {
         <form onSubmit={save} className="space-y-3">
           <div>
             <label className="block text-xs font-semibold mb-1.5">{t("profile.displayName")}</label>
-            <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} maxLength={60}
+            <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} maxLength={80}
               placeholder={profile?.full_name ?? t("profile.displayNamePlaceholder")}
               className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
           </div>

@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { OperatingStatus } from "./dispensers";
+import { reportSchema } from "./validation";
 
 export type WaterReport = {
   id: string;
@@ -69,6 +70,7 @@ export type NewReportInput = {
 };
 
 export async function createReport(input: NewReportInput): Promise<WaterReport> {
+  reportSchema.parse(input);
   const { data: u } = await supabase.auth.getUser();
   if (!u.user) throw new Error("Please sign in to submit a report.");
   if (!input.tested_directly_from_outlet) {
@@ -77,8 +79,8 @@ export async function createReport(input: NewReportInput): Promise<WaterReport> 
   if (!(input.ph_level >= 0 && input.ph_level <= 14)) {
     throw new Error("pH must be between 0 and 14.");
   }
-  if (!Number.isInteger(input.tds_ppm) || input.tds_ppm < 0) {
-    throw new Error("TDS must be a whole number of 0 or greater.");
+  if (!Number.isInteger(input.tds_ppm) || input.tds_ppm < 0 || input.tds_ppm > 5000) {
+    throw new Error("TDS must be a whole number between 0 and 5000.");
   }
   const { data, error } = await supabase
     .from("water_quality_reports")

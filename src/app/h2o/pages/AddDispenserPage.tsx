@@ -8,6 +8,7 @@ import { PhotoPicker, type PhotoDraft } from "@/app/h2o/PhotoPicker";
 import { uploadDispenserImages } from "@/lib/h2o/images";
 import { createDispenser, type OperatingStatus } from "@/lib/h2o/dispensers";
 import { useTranslation } from "react-i18next";
+import { dispenserSchema } from "@/lib/h2o/validation";
 
 export function AddDispenserPage() {
   const navigate = useNavigate();
@@ -97,6 +98,7 @@ export function AddDispenserPage() {
     if (!picked) return toast.error(t("validation.locationRequired"));
     setSubmitting(true);
     try {
+      dispenserSchema.parse({ name, address, location_description: description, latitude: picked.lat, longitude: picked.lng, operating_status: status });
       const image_urls = await uploadDispenserImages(photos.map((p) => p.file));
       const created = await createDispenser({
         name,
@@ -133,14 +135,14 @@ export function AddDispenserPage() {
 
         <div>
           <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.address")}</label>
-          <input value={address} onChange={(e) => setAddress(e.target.value)} maxLength={200}
+          <input value={address} onChange={(e) => setAddress(e.target.value)} maxLength={300}
             placeholder={t("dispensers.add.addressPlaceholder")}
             className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
         </div>
 
         <div>
           <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.description")}</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={400} rows={2}
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} rows={2}
             placeholder={t("dispensers.add.descriptionPlaceholder")}
             className="w-full rounded-2xl border border-border bg-card p-3 text-sm outline-none focus:border-primary" />
         </div>
