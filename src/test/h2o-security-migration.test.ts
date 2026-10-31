@@ -3,10 +3,7 @@ import { describe, expect, it } from "vitest";
 
 // Static migration regressions; these do not exercise hosted RLS with real sessions.
 const sql = readFileSync(
-  new URL(
-    "../../supabase/migrations/20261031084647_e9d6596a-d8fb-424a-82b2-54fb6cab0a09.sql",
-    import.meta.url,
-  ),
+  "supabase/migrations/20261031084647_e9d6596a-d8fb-424a-82b2-54fb6cab0a09.sql",
   "utf8",
 );
 describe("security migration invariants (static)", () => {
