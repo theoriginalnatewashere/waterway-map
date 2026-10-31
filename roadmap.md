@@ -1,10 +1,10 @@
 # Security and reliability — current H2O Map project only
 
-- [ ] Apply versioned security migration and verify role, report and photo policies.
-- [ ] Fix language saving and test failed saves and racing changes.
-- [ ] Resolve lint issues without changing the UI.
-- [ ] Verify validation parity; run tests and lint; inspect automated type/build evidence.
-- [ ] Report results and remaining authenticated/production verification blockers.
+- [x] Apply versioned security migration; verify hosted definitions and linter (real owner/admin execution remains blocked below).
+- [x] Fix language saving and test failed saves and racing changes.
+- [x] Resolve lint issues without changing the UI.
+- [x] Verify validation parity; run tests and lint; inspect automated type/build evidence.
+- [x] Report results and remaining authenticated/production verification blockers.
 
 ## Previous verification
 
