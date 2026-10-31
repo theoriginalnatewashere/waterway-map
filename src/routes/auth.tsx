@@ -18,6 +18,10 @@ export const Route = createFileRoute("/auth")({
     meta: [
       { title: "Sign in — H2O Map" },
       { name: "description", content: "Sign in or create an account to contribute water dispenser locations and readings." },
+      { property: "og:title", content: "Sign in — H2O Map" },
+      { property: "og:description", content: "Sign in or create an account to contribute water dispenser locations and readings." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthSignUp,

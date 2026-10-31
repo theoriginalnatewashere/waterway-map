@@ -18,6 +18,8 @@ export const Route = createFileRoute("/")({
         content:
           "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
 });
