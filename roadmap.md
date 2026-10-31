@@ -1,4 +1,12 @@
-# Post-migration verification — new H2O Map project only
+# Security and reliability — current H2O Map project only
+
+- [ ] Apply versioned security migration and verify role, report and photo policies.
+- [ ] Fix language saving and test failed saves and racing changes.
+- [ ] Resolve lint issues without changing the UI.
+- [ ] Verify validation parity; run tests and lint; inspect automated type/build evidence.
+- [ ] Report results and remaining authenticated/production verification blockers.
+
+## Previous verification
 
 - [x] Audit hosted constraints, grants, RLS, storage and security warnings.
 - [x] Fix safe frontend validation and auth redirect issues; add regression tests.
