@@ -11,13 +11,27 @@ export function OperatingStatusBadge({ status }: { status: OperatingStatus }) {
   const { t } = useTranslation();
   const cfg =
     status === "working"
-      ? { Icon: CheckCircle2, cls: "bg-emerald-100 text-emerald-800", label: t("reports.status.working") }
+      ? {
+          Icon: CheckCircle2,
+          cls: "bg-emerald-100 text-emerald-800",
+          label: t("reports.status.working"),
+        }
       : status === "out_of_service"
-        ? { Icon: XCircle, cls: "bg-red-100 text-red-800", label: t("reports.status.out_of_service") }
-        : { Icon: HelpCircle, cls: "bg-muted text-muted-foreground", label: t("reports.status.unknown") };
+        ? {
+            Icon: XCircle,
+            cls: "bg-red-100 text-red-800",
+            label: t("reports.status.out_of_service"),
+          }
+        : {
+            Icon: HelpCircle,
+            cls: "bg-muted text-muted-foreground",
+            label: t("reports.status.unknown"),
+          };
   const { Icon, cls, label } = cfg;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${cls}`}>
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${cls}`}
+    >
       <Icon className="h-3 w-3" /> {label}
     </span>
   );
@@ -53,15 +67,67 @@ type TdsRating = {
 };
 
 const RANGES: { min: number; max: number | null; rating: TdsRating }[] = [
-  { min: 0, max: 20, rating: { labelKey: "reports.quality.excellent", dot: "bg-emerald-500", card: "bg-emerald-50", text: "text-emerald-800", border: "border-emerald-200" } },
-  { min: 21, max: 40, rating: { labelKey: "reports.quality.veryGood", dot: "bg-lime-500", card: "bg-lime-50", text: "text-lime-800", border: "border-lime-200" } },
-  { min: 41, max: 60, rating: { labelKey: "reports.quality.good", dot: "bg-yellow-500", card: "bg-yellow-50", text: "text-yellow-800", border: "border-yellow-200" } },
-  { min: 61, max: 100, rating: { labelKey: "reports.quality.inspection", dot: "bg-orange-500", card: "bg-orange-50", text: "text-orange-800", border: "border-orange-200" } },
-  { min: 101, max: null, rating: { labelKey: "reports.quality.replacement", dot: "bg-red-500", card: "bg-red-50", text: "text-red-800", border: "border-red-200" } },
+  {
+    min: 0,
+    max: 20,
+    rating: {
+      labelKey: "reports.quality.excellent",
+      dot: "bg-emerald-500",
+      card: "bg-emerald-50",
+      text: "text-emerald-800",
+      border: "border-emerald-200",
+    },
+  },
+  {
+    min: 21,
+    max: 40,
+    rating: {
+      labelKey: "reports.quality.veryGood",
+      dot: "bg-lime-500",
+      card: "bg-lime-50",
+      text: "text-lime-800",
+      border: "border-lime-200",
+    },
+  },
+  {
+    min: 41,
+    max: 60,
+    rating: {
+      labelKey: "reports.quality.good",
+      dot: "bg-yellow-500",
+      card: "bg-yellow-50",
+      text: "text-yellow-800",
+      border: "border-yellow-200",
+    },
+  },
+  {
+    min: 61,
+    max: 100,
+    rating: {
+      labelKey: "reports.quality.inspection",
+      dot: "bg-orange-500",
+      card: "bg-orange-50",
+      text: "text-orange-800",
+      border: "border-orange-200",
+    },
+  },
+  {
+    min: 101,
+    max: null,
+    rating: {
+      labelKey: "reports.quality.replacement",
+      dot: "bg-red-500",
+      card: "bg-red-50",
+      text: "text-red-800",
+      border: "border-red-200",
+    },
+  },
 ];
 
 function getTdsRating(tds_ppm: number): TdsRating {
-  const match = RANGES.find((r) => (r.max === null ? tds_ppm >= r.min : tds_ppm >= r.min && tds_ppm <= r.max));
+  const match = RANGES.find((r) =>
+    r.max === null ? tds_ppm >= r.min : tds_ppm >= r.min && tds_ppm <= r.max,
+  );
   return match?.rating ?? RANGES[RANGES.length - 1].rating;
 }
 
@@ -77,7 +143,9 @@ export function TdsQualityCard({ tds_ppm }: { tds_ppm: number | null }) {
       <div className="rounded-2xl border border-border bg-card p-4">
         <div className="flex items-center gap-2">
           <span className="h-3 w-3 rounded-full bg-muted" />
-          <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">TDS</span>
+          <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+            TDS
+          </span>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">{t("reports.noTds")}</p>
       </div>
@@ -92,7 +160,9 @@ export function TdsQualityCard({ tds_ppm }: { tds_ppm: number | null }) {
       <div className={`rounded-xl p-3 ${rating.card} ${rating.border} border`}>
         <div className="flex items-center gap-2">
           <span className={`h-3 w-3 rounded-full ${rating.dot}`} />
-          <span className={`text-[11px] font-medium uppercase tracking-wide ${rating.text}`}>TDS</span>
+          <span className={`text-[11px] font-medium uppercase tracking-wide ${rating.text}`}>
+            TDS
+          </span>
         </div>
         <div className="mt-1 flex items-baseline gap-1">
           <span className={`text-4xl font-bold tracking-tight ${rating.text}`}>{tds_ppm}</span>
@@ -128,7 +198,6 @@ export function TdsQualityCard({ tds_ppm }: { tds_ppm: number | null }) {
     </div>
   );
 }
-
 
 export function ScreeningNotice() {
   const { t } = useTranslation();

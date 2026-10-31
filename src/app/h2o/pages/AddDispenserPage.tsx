@@ -39,10 +39,17 @@ export function AddDispenserPage() {
 
     const stop = () => {
       if (watchId !== null) {
-        try { navigator.geolocation.clearWatch(watchId); } catch { /* noop */ }
+        try {
+          navigator.geolocation.clearWatch(watchId);
+        } catch {
+          /* noop */
+        }
         watchId = null;
       }
-      if (stopTimer) { clearTimeout(stopTimer); stopTimer = null; }
+      if (stopTimer) {
+        clearTimeout(stopTimer);
+        stopTimer = null;
+      }
       setLocating(false);
       if (!gotAny && !opts.silent) toast.error(t("validation.locationFailed"));
     };
@@ -65,8 +72,8 @@ export function AddDispenserPage() {
               err.code === 1
                 ? t("validation.locationDenied")
                 : err.code === 3
-                ? t("validation.locationTimeout")
-                : t("validation.locationFailed");
+                  ? t("validation.locationTimeout")
+                  : t("validation.locationFailed");
             toast.error(msg);
           }
           stop();
@@ -98,7 +105,14 @@ export function AddDispenserPage() {
     if (!picked) return toast.error(t("validation.locationRequired"));
     setSubmitting(true);
     try {
-      dispenserSchema.parse({ name, address, location_description: description, latitude: picked.lat, longitude: picked.lng, operating_status: status });
+      dispenserSchema.parse({
+        name,
+        address,
+        location_description: description,
+        latitude: picked.lat,
+        longitude: picked.lng,
+        operating_status: status,
+      });
       const image_urls = await uploadDispenserImages(photos.map((p) => p.file));
       const created = await createDispenser({
         name,
@@ -128,41 +142,69 @@ export function AddDispenserPage() {
 
         <div>
           <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.name")}</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} required maxLength={120}
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={120}
             placeholder={t("dispensers.add.namePlaceholder")}
-            className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
+            className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.address")}</label>
-          <input value={address} onChange={(e) => setAddress(e.target.value)} maxLength={300}
+          <label className="block text-xs font-semibold mb-1.5">
+            {t("dispensers.add.address")}
+          </label>
+          <input
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            maxLength={300}
             placeholder={t("dispensers.add.addressPlaceholder")}
-            className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
+            className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.description")}</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} rows={2}
+          <label className="block text-xs font-semibold mb-1.5">
+            {t("dispensers.add.description")}
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            maxLength={500}
+            rows={2}
             placeholder={t("dispensers.add.descriptionPlaceholder")}
-            className="w-full rounded-2xl border border-border bg-card p-3 text-sm outline-none focus:border-primary" />
+            className="w-full rounded-2xl border border-border bg-card p-3 text-sm outline-none focus:border-primary"
+          />
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-xs font-semibold">{t("dispensers.add.locationOnMap")}</label>
+            <label className="block text-xs font-semibold">
+              {t("dispensers.add.locationOnMap")}
+            </label>
             <button
               type="button"
               onClick={useMyLocation}
               disabled={locating}
               className="inline-flex items-center gap-1 text-xs font-medium text-primary disabled:opacity-60"
             >
-              {locating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Crosshair className="h-3.5 w-3.5" />}
+              {locating ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Crosshair className="h-3.5 w-3.5" />
+              )}
               {locating ? t("dispensers.add.locating") : t("dispensers.add.useMyLocation")}
             </button>
           </div>
-          <MapView markers={[]} pickedLocation={picked}
+          <MapView
+            markers={[]}
+            pickedLocation={picked}
             onPickLocation={(lat, lng) => setPicked({ lat, lng })}
-            initialCenter={picked ?? undefined} height="40vh" />
+            initialCenter={picked ?? undefined}
+            height="40vh"
+          />
           <p className="mt-1 text-[11px] text-muted-foreground">{t("dispensers.add.mapHint")}</p>
           {picked && (
             <p className="mt-1 text-[11px] text-muted-foreground">
@@ -175,11 +217,17 @@ export function AddDispenserPage() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5">{t("dispensers.add.operatingStatus")}</label>
+          <label className="block text-xs font-semibold mb-1.5">
+            {t("dispensers.add.operatingStatus")}
+          </label>
           <div className="grid grid-cols-3 gap-2">
             {(["working", "out_of_service", "unknown"] as OperatingStatus[]).map((s) => (
-              <button key={s} type="button" onClick={() => setStatus(s)}
-                className={`h-10 rounded-xl border text-xs font-medium ${status === s ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}>
+              <button
+                key={s}
+                type="button"
+                onClick={() => setStatus(s)}
+                className={`h-10 rounded-xl border text-xs font-medium ${status === s ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground"}`}
+              >
                 {t(`reports.status.${s}`)}
               </button>
             ))}
@@ -188,8 +236,11 @@ export function AddDispenserPage() {
 
         <PhotoPicker photos={photos} onChange={setPhotos} onError={toast.error} />
 
-        <button type="submit" disabled={submitting}
-          className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-foreground text-background font-medium shadow disabled:opacity-60">
+        <button
+          type="submit"
+          disabled={submitting}
+          className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-foreground text-background font-medium shadow disabled:opacity-60"
+        >
           {submitting && <Loader2 className="h-4 w-4 animate-spin" />} {t("dispensers.add.submit")}
         </button>
       </form>

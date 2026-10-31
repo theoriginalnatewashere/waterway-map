@@ -1,6 +1,7 @@
 // Parse with URL as well as checking slashes: browsers normalize backslashes.
 export function safeAuthNext(value: unknown): string | undefined {
-  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")) return undefined;
+  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//"))
+    return undefined;
   const origin = "https://h2o.invalid";
   try {
     const url = new URL(value, origin);

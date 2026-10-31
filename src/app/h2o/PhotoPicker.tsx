@@ -59,7 +59,11 @@ export function PhotoPicker({
             key={p.previewUrl}
             className="relative aspect-square overflow-hidden rounded-2xl border border-border bg-secondary"
           >
-            <img src={p.previewUrl} alt={t("photos.attachment", { index: i + 1 })} className="h-full w-full object-cover" />
+            <img
+              src={p.previewUrl}
+              alt={t("photos.attachment", { index: i + 1 })}
+              className="h-full w-full object-cover"
+            />
             <button
               type="button"
               aria-label={t("photos.remove", { index: i + 1 })}

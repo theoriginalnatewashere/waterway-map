@@ -84,18 +84,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "H2O Map — Find reverse osmosis water dispensers near you" },
-      { name: "description", content: "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours." },
+      {
+        name: "description",
+        content:
+          "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
+      },
       { name: "theme-color", content: "#0EA5E9" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "H2O Map" },
       { property: "og:title", content: "H2O Map — Find reverse osmosis water dispensers near you" },
-      { property: "og:description", content: "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours." },
+      {
+        property: "og:description",
+        content:
+          "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "H2O Map — Find reverse osmosis water dispensers near you" },
-      { name: "twitter:description", content: "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours." },
+      {
+        name: "twitter:title",
+        content: "H2O Map — Find reverse osmosis water dispensers near you",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -147,4 +162,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

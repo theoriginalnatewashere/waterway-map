@@ -55,7 +55,8 @@ export const en = {
     searchPlaceholder: "Search by name or address",
     locateMe: "Locate me",
     yourLocation: "Your location",
-    disclaimer: "Community readings are for general screening only and cannot confirm water safety.",
+    disclaimer:
+      "Community readings are for general screening only and cannot confirm water safety.",
     legend: {
       recent: "Recent report",
       outdated: "Needs test / outdated",
@@ -65,7 +66,8 @@ export const en = {
     errors: {
       unsupported: "Location is not available on this device.",
       generic: "Could not determine your location. Please try again.",
-      denied: "Location permission was denied. Enable it in your device settings to use this feature.",
+      denied:
+        "Location permission was denied. Enable it in your device settings to use this feature.",
       unavailable: "Location information is unavailable right now.",
       timeout: "Location request timed out. Please try again.",
     },
@@ -142,7 +144,8 @@ export const en = {
       dispenserStatus: "Dispenser status",
       notes: "Notes (optional)",
       notesPlaceholder: "Anything neighbours should know about this reading.",
-      directly: "I tested the water directly from the dispenser outlet, not from a bottle or container.",
+      directly:
+        "I tested the water directly from the dispenser outlet, not from a bottle or container.",
       submit: "Submit report",
       success: "Report submitted — thanks!",
     },
@@ -164,6 +167,9 @@ export const en = {
     noReports: "You haven't submitted any reports yet.",
     saveSuccess: "Profile saved",
     saveError: "Could not save profile",
+    languageSaveError:
+      "Language changed on this device, but could not be saved to your account. Please try again.",
+    languageLocalSaveError: "Could not remember the language on this device.",
     language: "Language / ภาษา",
     languageEnglish: "English",
     languageThai: "ไทย",

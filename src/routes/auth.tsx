@@ -6,7 +6,9 @@ import { safeAuthNext } from "@/lib/authRedirect";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  validateSearch: (s: Record<string, unknown>): { next?: string } => ({ next: safeAuthNext(s.next) }),
+  validateSearch: (s: Record<string, unknown>): { next?: string } => ({
+    next: safeAuthNext(s.next),
+  }),
   beforeLoad: async ({ search }) => {
     const { data } = await supabase.auth.getUser();
     if (data.user) {
@@ -17,9 +19,17 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in — H2O Map" },
-      { name: "description", content: "Sign in or create an account to contribute water dispenser locations and readings." },
+      {
+        name: "description",
+        content:
+          "Sign in or create an account to contribute water dispenser locations and readings.",
+      },
       { property: "og:title", content: "Sign in — H2O Map" },
-      { property: "og:description", content: "Sign in or create an account to contribute water dispenser locations and readings." },
+      {
+        property: "og:description",
+        content:
+          "Sign in or create an account to contribute water dispenser locations and readings.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

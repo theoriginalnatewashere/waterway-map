@@ -1,4 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import i18n, {
   detectInitialLanguage,
@@ -24,13 +33,20 @@ const LanguageContext = createContext<LanguageContextValue>({
 async function loadProfileLanguage(): Promise<AppLanguage | null> {
   const { data: u } = await supabase.auth.getUser();
   if (!u.user) return null;
-  const { data } = await supabase.from("profiles").select("language").eq("id", u.user.id).maybeSingle();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("language")
+    .eq("id", u.user.id)
+    .maybeSingle();
+  if (error) throw error;
   const value = (data as { language?: string } | null)?.language;
   return isAppLanguage(value) ? value : null;
 }
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<AppLanguage>("en");
+  const revision = useRef(0);
+  const saveQueue = useRef<Promise<void>>(Promise.resolve());
 
   const applyLanguage = useCallback((lang: AppLanguage) => {
     setLanguageState(lang);
@@ -47,9 +63,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     const sync = () => {
+      const requestedRevision = ++revision.current;
       loadProfileLanguage()
         .then((lang) => {
-          if (!cancelled && lang) {
+          if (!cancelled && lang && revision.current === requestedRevision) {
             applyLanguage(lang);
             storeLanguage(lang);
           }
@@ -59,8 +76,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         });
     };
     sync();
+    // Defer Supabase calls until its auth callback releases the session lock.
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN" || event === "USER_UPDATED") sync();
+      if (event === "SIGNED_IN" || event === "USER_UPDATED") {
+        void saveQueue.current.then(() => {
+          if (!cancelled) sync();
+        });
+      }
     });
     return () => {
       cancelled = true;
@@ -70,17 +92,27 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const setLanguage = useCallback(
     (lang: AppLanguage) => {
+      revision.current += 1;
       applyLanguage(lang);
-      storeLanguage(lang);
-      void (async () => {
+      if (!storeLanguage(lang)) toast.error(i18n.t("profile.languageLocalSaveError"));
+      // Serialize writes so a slow earlier request cannot overwrite the latest choice.
+      saveQueue.current = saveQueue.current.then(async () => {
         try {
-          const { data: u } = await supabase.auth.getUser();
+          const { data: u, error: authError } = await supabase.auth.getUser();
+          if (authError && authError.name !== "AuthSessionMissingError") throw authError;
           if (!u.user) return;
-          await supabase.from("profiles").update({ language: lang }).eq("id", u.user.id);
+          const { data, error } = await supabase
+            .from("profiles")
+            .update({ language: lang })
+            .eq("id", u.user.id)
+            .select("language")
+            .single();
+          if (error) throw error;
+          if (data.language !== lang) throw new Error("Language save was not confirmed");
         } catch {
-          // local preference still applies
+          toast.error(i18n.t("profile.languageSaveError"));
         }
-      })();
+      });
     },
     [applyLanguage],
   );

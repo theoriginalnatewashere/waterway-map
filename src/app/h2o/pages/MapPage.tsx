@@ -120,7 +120,9 @@ export function MapPage() {
       <header className="px-4 pt-5 pb-3">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-foreground">{t("map.title")}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+              {t("map.title")}
+            </h1>
             <p className="text-xs text-muted-foreground">{t("map.subtitle")}</p>
           </div>
           <Link
@@ -177,7 +179,9 @@ export function MapPage() {
             </div>
           )}
         </div>
-        <div className="mt-3"><MapLegend /></div>
+        <div className="mt-3">
+          <MapLegend />
+        </div>
         <p className="mt-4 mb-6 text-[11px] text-muted-foreground">{t("map.disclaimer")}</p>
       </div>
     </AppShell>

@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Dispenser } from "@/lib/h2o/dispensers";
+import type {
+  Map as LeafletMap,
+  LayerGroup,
+  Marker as LeafletMarker,
+  LeafletMouseEvent,
+} from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 type Marker = {
@@ -11,10 +17,7 @@ type Marker = {
   title: string;
 };
 
-export function markerFromDispenser(
-  d: Dispenser,
-  latest: { tested_at: string } | null,
-): Marker {
+export function markerFromDispenser(d: Dispenser, latest: { tested_at: string } | null): Marker {
   let status: Marker["status"];
   if (d.operating_status === "out_of_service") status = "out_of_service";
   else if (!latest) status = "none";
@@ -59,11 +62,11 @@ export function MapView({
   height?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any>(null);
-  const layerRef = useRef<any>(null);
-  const pickedRef = useRef<any>(null);
-  const LRef = useRef<any>(null);
-  const userLocationRef = useRef<any>(null);
+  const mapRef = useRef<LeafletMap | null>(null);
+  const layerRef = useRef<LayerGroup | null>(null);
+  const pickedRef = useRef<LeafletMarker | null>(null);
+  const LRef = useRef<typeof import("leaflet") | null>(null);
+  const userLocationRef = useRef<LeafletMarker | null>(null);
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
@@ -83,15 +86,14 @@ export function MapView({
       );
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
       mapRef.current = map;
       layerRef.current = L.layerGroup().addTo(map);
       setMapReady(true);
 
       if (onPickLocation) {
-        map.on("click", (e: any) => {
+        map.on("click", (e: LeafletMouseEvent) => {
           onPickLocation(e.latlng.lat, e.latlng.lng);
         });
       }
@@ -143,8 +145,9 @@ export function MapView({
         draggable: !!onPickLocation,
       }).addTo(mapRef.current);
       if (onPickLocation) {
-        pickedRef.current.on("dragend", (e: any) => {
-          const ll = e.target.getLatLng();
+        pickedRef.current.on("dragend", () => {
+          const ll = pickedRef.current?.getLatLng();
+          if (!ll) return;
           onPickLocation(ll.lat, ll.lng);
         });
       }
@@ -174,10 +177,7 @@ export function MapView({
         icon,
         zIndexOffset: 1000,
       }).addTo(map);
-      map.setView(
-        [currentLocation.lat, currentLocation.lng],
-        Math.max(map.getZoom(), 15),
-      );
+      map.setView([currentLocation.lat, currentLocation.lng], Math.max(map.getZoom(), 15));
     }
   }, [currentLocation, mapReady]);
 
