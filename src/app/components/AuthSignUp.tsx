@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { getPostAuthRedirect } from "@/lib/profileRouting";
 import authIllustration from "@/assets/h2o-auth-hero.png.asset.json";
+import { authCallbackUrl } from "@/lib/authRedirect";
+import { useLanguage } from "@/i18n/LanguageProvider";
 
 type Mode = "signup" | "login";
 
@@ -20,6 +22,7 @@ function GoogleIcon({ className }: { className?: string }) {
 export function AuthSignUp() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const search = useSearch({ from: "/auth" }) as { next?: string };
   const next = search.next;
   const [mode, setMode] = useState<Mode>("signup");
@@ -34,18 +37,16 @@ export function AuthSignUp() {
     setLoading(true);
     try {
       if (mode === "signup") {
-        const emailRedirectTo = next
-          ? `${window.location.origin}${next}`
-          : `${window.location.origin}/`;
+        const emailRedirectTo = authCallbackUrl(window.location.origin, next);
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo },
+          options: { emailRedirectTo, data: { language } },
         });
         if (error) throw error;
         if (data.session && data.user) {
           toast.success(t("auth.accountCreated"));
-          if (next) window.location.href = next;
+           if (next) navigate({ href: next });
           else navigate({ to: getPostAuthRedirect(data.user.id) });
         } else {
           toast.success(t("auth.checkEmail"));
@@ -56,7 +57,7 @@ export function AuthSignUp() {
         if (error) throw error;
         toast.success(t("auth.signedIn"));
         if (next) {
-          window.location.href = next;
+          navigate({ href: next });
         } else {
           const dest = data.user ? getPostAuthRedirect(data.user.id) : "/";
           navigate({ to: dest });
@@ -74,9 +75,7 @@ export function AuthSignUp() {
     setGoogleLoading(true);
     try {
       // Return to the public /auth page; it forwards signed-in users to `next`.
-      const redirectTo = next
-        ? `${window.location.origin}/auth?next=${encodeURIComponent(next)}`
-        : `${window.location.origin}/auth`;
+      const redirectTo = authCallbackUrl(window.location.origin, next);
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo },

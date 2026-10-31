@@ -12,6 +12,10 @@ export const Route = createFileRoute("/_authenticated/report")({
     meta: [
       { title: "Report water quality — H2O Map" },
       { name: "description", content: "Submit a pH and TDS reading for a reverse osmosis water dispenser." },
+      { property: "og:title", content: "Report water quality — H2O Map" },
+      { property: "og:description", content: "Submit a pH and TDS reading for a reverse osmosis water dispenser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
 });

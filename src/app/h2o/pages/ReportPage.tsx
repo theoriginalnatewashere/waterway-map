@@ -9,6 +9,7 @@ import { listDispensers, type Dispenser, type OperatingStatus } from "@/lib/h2o/
 import { uploadDispenserImages } from "@/lib/h2o/images";
 import { createReport } from "@/lib/h2o/reports";
 import { useTranslation } from "react-i18next";
+import { reportSchema } from "@/lib/h2o/validation";
 
 function nowLocalInput(): string {
   const d = new Date();
@@ -60,11 +61,14 @@ export function ReportPage() {
     if (submitting) return;
     if (!dispenserId) return toast.error(t("validation.chooseDispenser"));
     const phNum = Number(ph);
-    const tdsNum = Math.round(Number(tds));
+    const tdsNum = Number(tds);
     if (!Number.isFinite(phNum) || phNum < 0 || phNum > 14) return toast.error(t("validation.phRange"));
-    if (!Number.isFinite(tdsNum) || tdsNum < 0) return toast.error(t("validation.tdsRange"));
+    if (!Number.isInteger(tdsNum) || tdsNum < 0 || tdsNum > 5000) return toast.error(t("validation.tdsRange"));
+    if (temp !== "" && (!Number.isFinite(Number(temp)) || Number(temp) < -10 || Number(temp) > 100)) return toast.error(t("validation.temperatureRange"));
+    if (!directly) return toast.error(t("validation.directOutlet"));
     setSubmitting(true);
     try {
+      reportSchema.parse({ dispenser_id: dispenserId, ph_level: phNum, tds_ppm: tdsNum, tested_at: testedAt, water_temperature_c: temp === "" ? null : Number(temp), meter_model: meter, notes, dispenser_status: status, tested_directly_from_outlet: directly });
       const image_urls = await uploadDispenserImages(photos.map((p) => p.file));
       await createReport({
         dispenser_id: dispenserId,
@@ -141,17 +145,17 @@ export function ReportPage() {
           </div>
           <div>
             <label className="block text-xs font-semibold mb-1.5">{t("reports.form.tdsLabel")}</label>
-            <input type="number" step="1" min={0} required value={tds} onChange={(e) => setTds(e.target.value)}
+            <input type="number" step="1" min={0} max={5000} required value={tds} onChange={(e) => setTds(e.target.value)}
               className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
           </div>
           <div>
             <label className="block text-xs font-semibold mb-1.5">{t("reports.form.tempLabel")}</label>
-            <input type="number" step="0.1" value={temp} onChange={(e) => setTemp(e.target.value)}
+            <input type="number" step="0.1" min={-10} max={100} value={temp} onChange={(e) => setTemp(e.target.value)}
               className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
           </div>
           <div>
             <label className="block text-xs font-semibold mb-1.5">{t("reports.form.meterLabel")}</label>
-            <input value={meter} onChange={(e) => setMeter(e.target.value)} maxLength={80} placeholder={t("reports.form.meterPlaceholder")}
+            <input value={meter} onChange={(e) => setMeter(e.target.value)} maxLength={120} placeholder={t("reports.form.meterPlaceholder")}
               className="w-full h-11 rounded-2xl border border-border bg-card px-3 text-sm outline-none focus:border-primary" />
           </div>
         </div>
@@ -176,7 +180,7 @@ export function ReportPage() {
 
         <div>
           <label className="block text-xs font-semibold mb-1.5">{t("reports.form.notes")}</label>
-          <textarea rows={3} maxLength={800} value={notes} onChange={(e) => setNotes(e.target.value)}
+          <textarea rows={3} maxLength={2000} value={notes} onChange={(e) => setNotes(e.target.value)}
             placeholder={t("reports.form.notesPlaceholder")}
             className="w-full rounded-2xl border border-border bg-card p-3 text-sm outline-none focus:border-primary" />
         </div>

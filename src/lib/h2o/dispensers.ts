@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { dispenserSchema } from "./validation";
 
 export type OperatingStatus = "working" | "out_of_service" | "unknown";
 
@@ -47,6 +48,7 @@ export type NewDispenserInput = {
 };
 
 export async function createDispenser(input: NewDispenserInput): Promise<Dispenser> {
+  dispenserSchema.parse(input);
   const { data: u } = await supabase.auth.getUser();
   if (!u.user) throw new Error("Please sign in to add a dispenser.");
   const { data, error } = await supabase
@@ -71,6 +73,7 @@ export async function updateDispenser(
   id: string,
   patch: Partial<NewDispenserInput>,
 ): Promise<Dispenser> {
+  dispenserSchema.partial().parse(patch);
   const { data, error } = await supabase
     .from("dispensers")
     .update({
