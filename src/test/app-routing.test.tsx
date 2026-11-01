@@ -31,7 +31,8 @@ describe("App routing", () => {
       ["/report", "/_authenticated/report"],
       ["/dispensers/new", "/_authenticated/dispensers/new"],
       ["/welcome-location", "/welcome-location"],
-    ]) expect(router.matchRoutes(path).at(-1)?.routeId).toBe(routeId);
+    ])
+      expect(router.matchRoutes(path).at(-1)?.routeId).toBe(routeId);
   });
   it("returns post-auth users to the map while preserving first-time location onboarding", async () => {
     localStorage.removeItem("h2o.locationOnboarded:route-test");
