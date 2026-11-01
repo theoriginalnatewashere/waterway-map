@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -126,8 +127,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
   return (
-    <html lang="en">
+    <html lang={pathname === "/" ? "th" : "en"}>
       <head>
         <HeadContent />
       </head>
@@ -142,23 +144,28 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const isLanding = pathname === "/" || pathname === "/en";
 
   useEffect(() => {
     registerPwa();
+    if (isLanding) return;
     const { data } = supabase.auth.onAuthStateChange((event: string) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
       if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
     });
     return () => data.subscription.unsubscribe();
-  }, [router, queryClient]);
+  }, [router, queryClient, isLanding]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <Outlet />
-        <Toaster richColors position="top-center" />
-      </LanguageProvider>
+      {isLanding ? <Outlet /> : (
+        <LanguageProvider>
+          <Outlet />
+          <Toaster richColors position="top-center" />
+        </LanguageProvider>
+      )}
     </QueryClientProvider>
   );
 }

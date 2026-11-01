@@ -62,7 +62,7 @@ export function AuthSignUp() {
         if (next) {
           navigate({ href: next });
         } else {
-          const dest = data.user ? getPostAuthRedirect(data.user.id) : "/";
+          const dest = data.user ? getPostAuthRedirect(data.user.id) : "/map";
           navigate({ to: dest });
         }
       }

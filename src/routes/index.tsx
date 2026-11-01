@@ -1,25 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPage } from "@/app/h2o/pages/MapPage";
+import { LandingPage } from "@/app/h2o/landing/LandingPage";
+import { landingHead } from "@/app/h2o/landing/content";
 
 export const Route = createFileRoute("/")({
-  ssr: false,
-  component: MapPage,
-  head: () => ({
-    meta: [
-      { title: "H2O Map — Find reverse osmosis water dispensers near you" },
-      {
-        name: "description",
-        content:
-          "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
-      },
-      { property: "og:title", content: "H2O Map — Find reverse osmosis water dispensers near you" },
-      {
-        property: "og:description",
-        content:
-          "Browse a community map of reverse osmosis water dispensers with real pH and TDS readings from neighbours.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  component: ThaiLanding,
+  head: () => landingHead("th"),
 });
+
+function ThaiLanding() {
+  return <LandingPage language="th" />;
+}

@@ -58,7 +58,7 @@ export function DispenserDetailPage({ id }: { id: string }) {
     if (typeof window !== "undefined" && window.history.length > 1) {
       router.history.back();
     } else {
-      router.navigate({ to: "/" });
+      router.navigate({ to: "/map" });
     }
   };
 
