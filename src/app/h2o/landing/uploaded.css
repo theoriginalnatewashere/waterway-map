@@ -91,7 +91,7 @@
   --teal: var(--uploaded-color-6);
   --ice: var(--uploaded-color-7);
   --page: var(--uploaded-color-8);
-  --var(--uploaded-color-9): var(--uploaded-color-10);
+  --white: var(--uploaded-color-10);
   --line: var(--uploaded-color-11);
   --gold: var(--uploaded-color-12);
   --gold-bg: var(--uploaded-color-13);
@@ -104,7 +104,7 @@
 }
 .uploaded-landing[lang="th"] {
   margin: 0;
-  background: var(--var(--uploaded-color-9));
+  background: var(--white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -138,7 +138,7 @@
   display: inline-flex;
   gap: 11px;
   align-items: center;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-weight: 800;
   font-size: 25px;
   letter-spacing: 0;
@@ -197,7 +197,7 @@
   color: var(--ink);
   border: 1px solid var(--uploaded-color-20);
 }
-.uploaded-landing[lang="th"] .button-var(--uploaded-color-9) {
+.uploaded-landing[lang="th"] .button-white {
   background: var(--uploaded-color-9);
   color: var(--ink);
 }
@@ -1039,7 +1039,7 @@
   max-width: 700px;
 }
 .uploaded-landing[lang="th"] #what .tds-source {
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-size: 11px;
   line-height: 1.8;
   font-weight: 800;
@@ -1060,7 +1060,7 @@
   background: var(--uploaded-color-57);
   border-radius: 9px;
   margin-left: auto;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
 }
 .uploaded-landing[lang="th"] .lang-switch a {
   font-size: 12px;
@@ -1101,7 +1101,7 @@
     gap: 8px;
   }
   .uploaded-landing[lang="th"] #what .tds-source {
-    var(--uploaded-color-9)-space: normal;
+    white-space: normal;
   }
   .uploaded-landing[lang="th"] .lang-switch {
     margin-left: 0;
@@ -1184,7 +1184,7 @@
   color: var(--uploaded-color-1);
   font-size: 15px;
   font-weight: 850;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .uploaded-landing[lang="th"] #what .tds-range-grade {
@@ -1349,7 +1349,7 @@
   --teal: var(--uploaded-color-6);
   --ice: var(--uploaded-color-7);
   --page: var(--uploaded-color-8);
-  --var(--uploaded-color-9): var(--uploaded-color-10);
+  --white: var(--uploaded-color-10);
   --line: var(--uploaded-color-11);
   --gold: var(--uploaded-color-12);
   --gold-bg: var(--uploaded-color-13);
@@ -1362,7 +1362,7 @@
 }
 .uploaded-landing[lang="en"] {
   margin: 0;
-  background: var(--var(--uploaded-color-9));
+  background: var(--white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -1396,7 +1396,7 @@
   display: inline-flex;
   gap: 11px;
   align-items: center;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-weight: 800;
   font-size: 25px;
   letter-spacing: 0;
@@ -1455,7 +1455,7 @@
   color: var(--ink);
   border: 1px solid var(--uploaded-color-20);
 }
-.uploaded-landing[lang="en"] .button-var(--uploaded-color-9) {
+.uploaded-landing[lang="en"] .button-white {
   background: var(--uploaded-color-9);
   color: var(--ink);
 }
@@ -2206,7 +2206,7 @@
   max-width: 700px;
 }
 .uploaded-landing[lang="en"] #what .tds-source {
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-size: 11px;
   line-height: 1.8;
   font-weight: 800;
@@ -2227,7 +2227,7 @@
   background: var(--uploaded-color-57);
   border-radius: 9px;
   margin-left: auto;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
 }
 .uploaded-landing[lang="en"] .lang-switch a {
   font-size: 12px;
@@ -2268,7 +2268,7 @@
     gap: 8px;
   }
   .uploaded-landing[lang="en"] #what .tds-source {
-    var(--uploaded-color-9)-space: normal;
+    white-space: normal;
   }
   .uploaded-landing[lang="en"] .lang-switch {
     margin-left: 0;
@@ -2351,7 +2351,7 @@
   color: var(--uploaded-color-1);
   font-size: 15px;
   font-weight: 850;
-  var(--uploaded-color-9)-space: nowrap;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .uploaded-landing[lang="en"] #what .tds-range-grade {
