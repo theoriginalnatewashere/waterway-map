@@ -30,5 +30,6 @@
 
 ## Portable deployment images
 
-- [ ] Recover all original asset-pointer images into public/images and replace landing/authentication links.
-- [ ] Verify image bytes, static serving, routing tests and available automated checks; preserve Supabase photos and PWA.
+- [x] Recover all ten original asset-pointer images into public/images and replace landing/authentication links; remove obsolete local pointers without deleting CDN originals.
+- [x] Verify ten images byte-for-byte over HTTP, all images on Thai/English/auth pages, 30 tests, lint and automated build OK; preserve Supabase photos and PWA.
+- [ ] Verify fresh production build and GitHub/Cloudflare output (blocked: manual builds prohibited in this environment; remote deployment not performed).
