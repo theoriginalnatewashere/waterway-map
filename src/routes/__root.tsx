@@ -160,7 +160,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isLanding ? <Outlet /> : (
+      {isLanding ? (
+        <Outlet />
+      ) : (
         <LanguageProvider>
           <Outlet />
           <Toaster richColors position="top-center" />
