@@ -27,7 +27,7 @@ for (const language of ["th", "en"] as const) {
     lng: language,
     resources: { en: { translation: en }, th: { translation: th } },
     interpolation: { escapeValue: false },
-    initImmediate: false,
+    initAsync: false,
   });
 }
 
