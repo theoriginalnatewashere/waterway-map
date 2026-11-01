@@ -1,4 +1,5 @@
 <!-- LOVABLE:BEGIN -->
+
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
@@ -7,6 +8,7 @@
 >
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
+
 <!-- LOVABLE:END -->
 
 - H2O Map UI lives in src/app/h2o, data helpers in src/lib/h2o, translations in src/i18n — keep pages thin route wrappers over these modules (ported as-is from the original project).
@@ -19,4 +21,4 @@
 - Language writes are serialized and profile synchronization is revision-guarded so slow requests cannot overwrite a newer choice; failed saves are surfaced through translated notifications.
 - Lint excludes integration-generated files and exempts only existing colocated shared APIs from Fast Refresh restrictions, avoiding unrelated module restructuring.
 
-- Public landing copy is URL-static in src/app/h2o/landing; / and /en bypass app language/auth subscriptions so landing navigation never saves profile preferences. The existing MapPage is mounted unchanged at /map.
+- Public landing uses inspected static uploaded HTML and globally imported, selector-scoped CSS in src/app/h2o/landing; / and /en bypass app language/auth subscriptions so landing navigation never saves profile preferences. The existing MapPage is mounted unchanged at /map.

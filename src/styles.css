@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./app/h2o/landing/uploaded.css";
 
 @custom-variant dark (&:is(.dark *));
 
