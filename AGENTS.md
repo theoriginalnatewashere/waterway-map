@@ -22,3 +22,4 @@
 - Lint excludes integration-generated files and exempts only existing colocated shared APIs from Fast Refresh restrictions, avoiding unrelated module restructuring.
 
 - Public landing uses inspected static uploaded HTML and globally imported, selector-scoped CSS in src/app/h2o/landing; / and /en bypass app language/auth subscriptions so landing navigation never saves profile preferences. The existing MapPage is mounted unchanged at /map.
+- Bundled product images live as original binaries in public/images and use /images/ paths so GitHub/Cloudflare deployments require no Lovable asset proxy; user-uploaded photos remain in Supabase Storage.

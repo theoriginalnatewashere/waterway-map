@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { getPostAuthRedirect } from "@/lib/profileRouting";
-import authIllustration from "@/assets/h2o-auth-hero.png.asset.json";
 import { authCallbackUrl } from "@/lib/authRedirect";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
@@ -101,7 +100,7 @@ export function AuthSignUp() {
       <div className="w-full max-w-md px-6 pt-10 pb-8 flex flex-col">
         <div className="mx-auto mt-2 mb-8 w-full overflow-hidden rounded-3xl bg-secondary/60">
           <img
-            src={authIllustration.url}
+            src="/images/h2o-auth-hero.png"
             alt={t("auth.illustrationAlt")}
             className="block w-full h-auto"
           />
