@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as EnRouteImport } from './routes/en'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as WelcomeLocationRouteImport } from './routes/welcome-location'
 import { Route as AuthenticatedReportRouteImport } from './routes/_authenticated/report'
@@ -31,6 +33,16 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnRoute = EnRouteImport.update({
+  id: '/en',
+  path: '/en',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -68,6 +80,8 @@ const AuthenticatedDispensersNewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/en': typeof EnRoute
+  '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
   '/welcome-location': typeof WelcomeLocationRoute
   '/report': typeof AuthenticatedReportRoute
@@ -78,6 +92,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/en': typeof EnRoute
+  '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
   '/welcome-location': typeof WelcomeLocationRoute
   '/report': typeof AuthenticatedReportRoute
@@ -90,6 +106,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/en': typeof EnRoute
+  '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
   '/welcome-location': typeof WelcomeLocationRoute
   '/_authenticated/report': typeof AuthenticatedReportRoute
@@ -102,6 +120,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/en'
+    | '/map'
     | '/profile'
     | '/welcome-location'
     | '/report'
@@ -112,6 +132,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/en'
+    | '/map'
     | '/profile'
     | '/welcome-location'
     | '/report'
@@ -123,6 +145,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/en'
+    | '/map'
     | '/profile'
     | '/welcome-location'
     | '/_authenticated/report'
@@ -135,6 +159,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  EnRoute: typeof EnRoute
+  MapRoute: typeof MapRoute
   ProfileRoute: typeof ProfileRoute
   WelcomeLocationRoute: typeof WelcomeLocationRoute
   DispensersIdRoute: typeof DispensersIdRoute
@@ -162,6 +188,20 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en': {
+      id: '/en'
+      path: '/en'
+      fullPath: '/en'
+      preLoaderRoute: typeof EnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -226,6 +266,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  EnRoute: EnRoute,
+  MapRoute: MapRoute,
   ProfileRoute: ProfileRoute,
   WelcomeLocationRoute: WelcomeLocationRoute,
   DispensersIdRoute: DispensersIdRoute,

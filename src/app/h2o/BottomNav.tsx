@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
 const items = [
-  { to: "/", labelKey: "navigation.map", icon: Map },
+  { to: "/map", labelKey: "navigation.map", icon: Map },
   { to: "/dispensers", labelKey: "navigation.dispensers", icon: Droplets },
   { to: "/report", labelKey: "navigation.report", icon: PlusCircle },
   { to: "/profile", labelKey: "navigation.profile", icon: User },
@@ -22,7 +22,7 @@ export function BottomNav() {
           <li key={to}>
             <Link
               to={to}
-              activeOptions={{ exact: to === "/" }}
+              activeOptions={{ exact: to === "/map" }}
               className={cn(
                 "flex flex-col items-center gap-0.5 px-2 py-2.5 text-[11px] font-medium text-muted-foreground",
                 "data-[status=active]:text-primary",

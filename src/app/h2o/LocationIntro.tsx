@@ -40,7 +40,7 @@ export function LocationIntro({ userId }: { userId: string }) {
     } catch {
       // ignore
     }
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/map", replace: true });
   }
 
   function handleAllow() {

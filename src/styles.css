@@ -59,10 +59,23 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-landing-navy: var(--landing-navy);
+  --color-landing-blue: var(--landing-blue);
+  --color-landing-cyan: var(--landing-cyan);
+  --color-landing-icy: var(--landing-icy);
+  --color-landing-slate: var(--landing-slate);
 }
 
 :root {
   --radius: 1.25rem;
+  --landing-navy: #0a293d;
+  --landing-blue: #006fa8;
+  --landing-cyan: #009dd7;
+  --landing-icy: #e9f6fc;
+  --landing-slate: #435b69;
+  --landing-surface: oklch(1 0 0);
+  --landing-line: oklch(0.9 0.025 230);
+  --landing-shadow: 0 16px 48px color-mix(in srgb, var(--landing-navy) 12%, transparent);
   /* Cool sky-blue water palette for H2O Map */
   --background: oklch(0.98 0.015 230);
   --foreground: oklch(0.22 0.05 240);
@@ -141,5 +154,579 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+}
+
+/* Public landing only: the existing application theme remains unchanged. */
+.h2o-landing {
+  --background: var(--landing-surface);
+  --foreground: var(--landing-navy);
+  --primary: var(--landing-blue);
+  --primary-foreground: var(--landing-surface);
+  --accent: var(--landing-icy);
+  --accent-foreground: var(--landing-navy);
+  --input: var(--landing-line);
+  --ring: var(--landing-blue);
+  background: var(--landing-surface);
+  color: var(--landing-navy);
+  font-family: "Noto Sans Thai", "Tahoma", "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+.landing-container {
+  width: min(1120px, calc(100% - 48px));
+  margin-inline: auto;
+}
+.landing-header {
+  background: var(--landing-surface);
+  border-bottom: 1px solid var(--landing-line);
+}
+.landing-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 88px;
+}
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.landing-brand img,
+.landing-footer-brand img {
+  border-radius: 8px;
+}
+.landing-nav {
+  display: flex;
+  gap: 32px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.landing-nav a,
+.landing-language a {
+  padding-block: 10px;
+}
+.landing-nav a:hover,
+.landing-language a:hover {
+  color: var(--landing-blue);
+}
+.landing-language {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+}
+.landing-language a[aria-current] {
+  color: var(--landing-blue);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.landing-hero {
+  background: var(--landing-icy);
+  overflow: hidden;
+}
+.landing-hero-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 720px;
+  padding-block: 64px;
+}
+.landing-hero-copy {
+  position: relative;
+  z-index: 1;
+  width: 60%;
+  max-width: 630px;
+}
+.landing-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--landing-blue);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.landing-kicker span {
+  width: 24px;
+  height: 3px;
+  background: var(--landing-cyan);
+  flex-shrink: 0;
+}
+.h2o-landing h1 {
+  font-size: 48px;
+  line-height: 1.25;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.landing-product {
+  display: block;
+  font-size: 19px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: var(--landing-blue);
+}
+.landing-lead {
+  color: var(--landing-slate);
+  font-size: 18px;
+  line-height: 1.85;
+  margin-top: 24px;
+}
+.landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+.h2o-landing .landing-actions a,
+.h2o-landing #install > div > a {
+  height: auto;
+  min-height: 50px;
+  padding: 12px 22px;
+  font-size: 15px;
+  white-space: normal;
+  text-align: center;
+}
+.landing-note {
+  font-size: 13px;
+  color: var(--landing-slate);
+  margin-top: 18px;
+}
+.landing-hero-visual {
+  position: absolute;
+  right: 10px;
+  top: 46px;
+  width: 286px;
+  margin: 0;
+}
+.landing-hero-visual img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--landing-line);
+  border-radius: 8px;
+  box-shadow: var(--landing-shadow);
+}
+.h2o-landing figcaption {
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 12px;
+  color: var(--landing-slate);
+  text-align: center;
+}
+.landing-section {
+  padding-block: 88px;
+  scroll-margin-top: 24px;
+}
+.landing-icy {
+  background: var(--landing-icy);
+}
+.landing-eyebrow {
+  color: var(--landing-blue);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.h2o-landing h2 {
+  font-size: 34px;
+  line-height: 1.4;
+  font-weight: 700;
+  max-width: 760px;
+  text-wrap: balance;
+}
+.h2o-landing h3 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.landing-what {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 100px;
+}
+.landing-list-visual {
+  width: 290px;
+  margin: 0 auto;
+}
+.landing-list-visual img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--landing-line);
+  border-radius: 8px;
+  box-shadow: var(--landing-shadow);
+}
+.landing-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 30px;
+  color: var(--landing-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+.landing-facts span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.landing-facts svg {
+  width: 18px;
+  height: 18px;
+}
+.landing-text-link {
+  margin-top: 20px;
+  padding-left: 0;
+  font-size: 15px;
+}
+.landing-audiences {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 44px;
+}
+.landing-audience {
+  border-top: 2px solid var(--landing-line);
+  padding-top: 26px;
+}
+.landing-feature-icon {
+  color: var(--landing-cyan);
+  width: 30px;
+  height: 30px;
+  margin-bottom: 20px;
+}
+.landing-audience p,
+.landing-step > p {
+  color: var(--landing-slate);
+  margin-top: 12px;
+}
+.landing-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 44px;
+}
+.landing-step-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.landing-step-title > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid var(--landing-blue);
+  border-radius: 50%;
+  color: var(--landing-blue);
+  font-size: 15px;
+  font-weight: 700;
+}
+.landing-step > p {
+  min-height: 84px;
+}
+.landing-step-map {
+  height: 280px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--landing-line);
+  margin-top: 20px;
+}
+.landing-step-map img {
+  width: 100%;
+  height: auto;
+  transform: translateY(-95px);
+}
+.landing-static-preview {
+  background: var(--landing-icy);
+  border: 1px solid var(--landing-line);
+  border-radius: 8px;
+  padding: 20px;
+  min-height: 280px;
+  margin-top: 20px;
+}
+.landing-static-preview .rounded-2xl {
+  border-radius: 8px;
+}
+.landing-static-preview .text-muted-foreground {
+  color: var(--landing-slate);
+}
+.landing-empty-reading {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--landing-surface);
+  border: 1px solid var(--landing-line);
+  border-radius: 8px;
+}
+.landing-empty-reading span {
+  display: block;
+  font-size: 12px;
+}
+.landing-empty-reading strong {
+  font-size: 28px;
+}
+.landing-report-preview h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.landing-preview-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.landing-report-preview span {
+  font-size: 12px;
+}
+.landing-preview-fields > div > div,
+.landing-preview-notes {
+  background: var(--landing-surface);
+  border: 1px solid var(--landing-line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: var(--landing-slate);
+}
+.landing-preview-notes {
+  height: 42px;
+}
+.landing-preview-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px dashed var(--landing-slate);
+  border-radius: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 12px;
+  color: var(--landing-slate);
+}
+.landing-preview-photo svg {
+  width: 16px;
+  height: 16px;
+}
+.landing-preview-caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--landing-slate);
+}
+.landing-install-body {
+  max-width: 720px;
+}
+.landing-install-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-block: 40px;
+}
+.landing-install-platform h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.landing-install-platform h3 svg {
+  width: 21px;
+  color: var(--landing-blue);
+}
+.landing-install-platform ol {
+  list-style: decimal;
+  padding-left: 24px;
+  margin-top: 20px;
+  color: var(--landing-slate);
+}
+.landing-install-platform li {
+  padding-left: 8px;
+  margin-block: 12px;
+}
+.landing-footer {
+  padding-block: 40px;
+  border-top: 1px solid var(--landing-line);
+}
+.landing-footer-brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.landing-footer-brand span {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--landing-slate);
+}
+.landing-footer p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--landing-slate);
+  margin-top: 24px;
+}
+.h2o-landing a:focus-visible {
+  outline: 2px solid var(--landing-blue);
+  outline-offset: 4px;
+}
+@media (max-width: 900px) {
+  .landing-nav {
+    gap: 18px;
+  }
+  .landing-hero-copy {
+    width: 58%;
+  }
+  .h2o-landing h1 {
+    font-size: 38px;
+  }
+  .landing-hero-visual {
+    width: 248px;
+    right: 0;
+    top: 74px;
+  }
+  .landing-what {
+    gap: 40px;
+  }
+  .landing-audiences,
+  .landing-steps {
+    gap: 20px;
+  }
+  .landing-step-title {
+    align-items: flex-start;
+  }
+  .landing-step-title h3 {
+    font-size: 18px;
+  }
+  .landing-static-preview {
+    padding: 14px;
+  }
+}
+@media (max-width: 640px) {
+  .landing-container {
+    width: calc(100% - 40px);
+  }
+  .landing-header-inner {
+    min-height: 78px;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-block: 16px;
+  }
+  .landing-brand {
+    font-size: 20px;
+  }
+  .landing-brand img {
+    width: 38px;
+    height: 38px;
+  }
+  .landing-nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .landing-hero-inner {
+    display: block;
+    min-height: 0;
+    padding-block: 40px;
+  }
+  .landing-hero-copy {
+    width: 100%;
+    max-width: none;
+  }
+  .landing-kicker {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+  .h2o-landing h1 {
+    font-size: 34px;
+    line-height: 1.35;
+  }
+  .landing-product {
+    font-size: 17px;
+  }
+  .landing-lead {
+    font-size: 16px;
+    margin-top: 18px;
+  }
+  .landing-actions {
+    margin-top: 24px;
+    gap: 10px;
+  }
+  .h2o-landing .landing-actions a {
+    font-size: 14px;
+    padding-inline: 16px;
+  }
+  .landing-note {
+    font-size: 12px;
+  }
+  .landing-hero-visual {
+    position: relative;
+    width: 218px;
+    top: auto;
+    right: auto;
+    margin: 32px auto 0;
+  }
+  .landing-hero-visual img {
+    max-height: 330px;
+    object-fit: cover;
+    object-position: top;
+  }
+  .landing-section {
+    padding-block: 56px;
+  }
+  .h2o-landing h2 {
+    font-size: 28px;
+  }
+  .landing-what {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .landing-what > div {
+    grid-row: 1;
+  }
+  .landing-list-visual {
+    width: 254px;
+  }
+  .landing-list-visual img {
+    height: 230px;
+  }
+  .landing-audiences,
+  .landing-steps,
+  .landing-install-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .landing-audiences,
+  .landing-steps {
+    margin-top: 32px;
+  }
+  .landing-audience {
+    padding-top: 20px;
+  }
+  .landing-feature-icon {
+    margin-bottom: 12px;
+  }
+  .landing-step > p {
+    min-height: 0;
+  }
+  .landing-step-map,
+  .landing-static-preview {
+    height: 260px;
+    min-height: 260px;
+  }
+  .landing-step-map img {
+    transform: translateY(-100px);
+  }
+  .landing-step-title h3 {
+    font-size: 20px;
+  }
+  .landing-footer-brand span {
+    width: 100%;
+    margin-left: 0;
   }
 }

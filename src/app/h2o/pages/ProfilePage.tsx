@@ -62,7 +62,7 @@ export function ProfilePage() {
   const signOut = async () => {
     await supabase.auth.signOut();
     toast.success(t("auth.signedOut"));
-    navigate({ to: "/" });
+    navigate({ to: "/map" });
   };
 
   const languageLabels: Record<AppLanguage, string> = {

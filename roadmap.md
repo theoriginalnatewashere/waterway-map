@@ -16,3 +16,8 @@
 - [x] Review automated type-check/build evidence and run existing tests.
 - [ ] Fresh production build (blocked: available harness runs automatic checks; no new production build was supplied).
 - [x] Deliver PASS / FAIL / NOT TESTED report; do not alter the original project, providers, policies or admin privileges.
+## Approved bilingual landing
+
+- [x] Add static Thai/English landing and truthful public app visuals.
+- [x] Move map route and update map destinations/PWA start only.
+- [x] Verify routing, languages, mobile layout, tests and automated checks; fresh production build remains blocked by environment rules above.

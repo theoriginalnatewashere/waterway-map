@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -29,7 +30,7 @@ function NotFoundComponent() {
         </p>
         <div className="mt-6">
           <Link
-            to="/"
+            to="/map"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Go home
@@ -67,7 +68,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
             Try again
           </button>
           <a
-            href="/"
+            href="/map"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Go home
@@ -126,8 +127,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
   return (
-    <html lang="en">
+    <html lang={pathname === "/" ? "th" : "en"}>
       <head>
         <HeadContent />
       </head>
@@ -142,23 +144,30 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const isLanding = pathname === "/" || pathname === "/en";
 
   useEffect(() => {
     registerPwa();
+    if (isLanding) return;
     const { data } = supabase.auth.onAuthStateChange((event: string) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
       if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
     });
     return () => data.subscription.unsubscribe();
-  }, [router, queryClient]);
+  }, [router, queryClient, isLanding]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
+      {isLanding ? (
         <Outlet />
-        <Toaster richColors position="top-center" />
-      </LanguageProvider>
+      ) : (
+        <LanguageProvider>
+          <Outlet />
+          <Toaster richColors position="top-center" />
+        </LanguageProvider>
+      )}
     </QueryClientProvider>
   );
 }

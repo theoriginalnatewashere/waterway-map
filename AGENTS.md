@@ -18,3 +18,5 @@
 - Photo reads follow referencing records' RLS plus uploader access; new attachments must belong to the caller, keeping unpublished uploads private.
 - Language writes are serialized and profile synchronization is revision-guarded so slow requests cannot overwrite a newer choice; failed saves are surfaced through translated notifications.
 - Lint excludes integration-generated files and exempts only existing colocated shared APIs from Fast Refresh restrictions, avoiding unrelated module restructuring.
+
+- Public landing copy is URL-static in src/app/h2o/landing; / and /en bypass app language/auth subscriptions so landing navigation never saves profile preferences. The existing MapPage is mounted unchanged at /map.
