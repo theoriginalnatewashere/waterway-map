@@ -26,4 +26,4 @@
 ## Uploaded landing replacement
 
 - [x] Replace Thai/English landing with supplied HTML, screenshots and isolated styles; preserve map and language destinations.
-- [ ] Verify both pages, images, language toggle, map CTA and routing tests.
+- [x] Verify both pages, images, language toggle, map CTA and routing tests.
