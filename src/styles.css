@@ -433,6 +433,17 @@
 .landing-step > p {
   min-height: 84px;
 }
+.landing-step-screenshot {
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--landing-line);
+  margin-top: 20px;
+}
+.landing-step-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .landing-step-map {
   height: 280px;
   overflow: hidden;

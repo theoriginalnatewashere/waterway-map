@@ -8,28 +8,16 @@ import {
   Smartphone,
   Share,
   MoreVertical,
-  ImagePlus,
 } from "lucide-react";
-import { createInstance } from "i18next";
-import { I18nextProvider } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { TdsQualityCard } from "@/app/h2o/StatusBadge";
-import { en } from "@/i18n/en";
-import { th } from "@/i18n/th";
 import mapAsset from "@/assets/landing/map.webp.asset.json";
 import listAsset from "@/assets/landing/dispensers.webp.asset.json";
+import howMapAsset from "@/assets/landing/how-map.png.asset.json";
+import howDetailAsset from "@/assets/landing/how-detail.png.asset.json";
+import howReportAsset from "@/assets/landing/how-report.png.asset.json";
 import { content, type LandingLanguage } from "./content";
 
-// Isolated translations for the existing empty TDS component; never change app preferences.
-const translations = { th: createInstance(), en: createInstance() };
-for (const language of ["th", "en"] as const) {
-  void translations[language].init({
-    lng: language,
-    resources: { en: { translation: en }, th: { translation: th } },
-    interpolation: { escapeValue: false },
-    initAsync: false,
-  });
-}
+const howAssets = [howMapAsset, howDetailAsset, howReportAsset];
 
 const ids = ["what", "why", "how", "install"] as const;
 const audienceIcons = [MapPin, Users, ClipboardCheck];
@@ -173,49 +161,17 @@ export function LandingPage({ language }: { language: LandingLanguage }) {
                     <h3>{title}</h3>
                   </div>
                   <p>{body}</p>
-                  {i === 0 ? (
-                    <div className="landing-step-map">
-                      <img
-                        src={mapAsset.url}
-                        alt={c.mapAlt}
-                        width="390"
-                        height="780"
-                        loading="lazy"
-                      />
-                    </div>
-                  ) : i === 1 ? (
-                    <div className="landing-static-preview">
-                      <I18nextProvider i18n={translations[language]}>
-                        <TdsQualityCard tds_ppm={null} />
-                      </I18nextProvider>
-                      <div className="landing-empty-reading">
-                        <span>pH</span>
-                        <strong>—</strong>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="landing-static-preview landing-report-preview">
-                      <h4>{c.report}</h4>
-                      <div className="landing-preview-fields">
-                        <div>
-                          <span>pH</span>
-                          <div>—</div>
-                        </div>
-                        <div>
-                          <span>TDS (ppm)</span>
-                          <div>—</div>
-                        </div>
-                      </div>
-                      <span>{c.notes}</span>
-                      <div className="landing-preview-notes" />
-                      <div className="landing-preview-photo">
-                        <ImagePlus />
-                        {c.photo}
-                      </div>
-                    </div>
-                  )}
+                  <div className="landing-step-screenshot">
+                    <img
+                      src={howAssets[i]?.url}
+                      alt={title}
+                      width="768"
+                      height="1665"
+                      loading="lazy"
+                    />
+                  </div>
                   <small className="landing-preview-caption">
-                    {i === 0 ? c.screenshot : c.illustration}
+                    {language === "th" ? "ภาพหน้าจอจากแอป" : "App screenshot"}
                   </small>
                 </article>
               ))}
