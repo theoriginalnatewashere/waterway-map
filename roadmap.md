@@ -27,3 +27,8 @@
 
 - [x] Replace Thai/English landing with supplied HTML, screenshots and isolated styles; preserve map and language destinations.
 - [x] Verify both pages, images, language toggle, map CTA and routing tests.
+
+## Portable deployment images
+
+- [ ] Recover all original asset-pointer images into public/images and replace landing/authentication links.
+- [ ] Verify image bytes, static serving, routing tests and available automated checks; preserve Supabase photos and PWA.
